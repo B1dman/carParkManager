@@ -23,13 +23,9 @@ public class H5Controller {
         TipRule Max = null;
         //通过id得到花费钱数
         String money = h5Service.getMoney(id);
-        if(money==null){
+        if(money==null) {
             return Max;
         }
-        System.out.println("测试hot-fix");
-        System.out.println("测试2");
-        System.out.println("master test");
-        System.out.println("hot-fix test");
         //判断money最多能抵多少
         Max = h5Service.getRule(money);
         if(Max!=null){
