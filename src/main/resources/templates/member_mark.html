@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="../js/vue-2.6.12.js"></script>
+    <style>
+    .marquee {
+        width: 1000px;
+        margin: 0 auto;
+        overflow: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+        animation: marquee 50s linear infinite;
+    }
+
+    .marquee:hover {
+        animation-play-state: paused
+    }
+
+    /* Make it move */
+    @keyframes marquee {
+        0%   { text-indent: 27.5em }
+        100% { text-indent: -105em }
+    }
+
+    /* Make it pretty */
+    .microsoft {
+        padding-left: 1.5em;
+        position: relative;
+        font: 16px 'Segoe UI', Tahoma, Helvetica, Sans-Serif;
+    }
+
+    /* ::before was :before before ::before was ::before - kthx */
+    .microsoft:before, .microsoft::before {
+        z-index: 2;
+        content: '';
+        position: absolute;
+        top: -1em; left: -1em;
+        width: .5em; height: .5em;
+        box-shadow: 1.0em 1.25em 0 #F65314,
+                    1.6em 1.25em 0 #7CBB00,
+                    1.0em 1.85em 0 #00A1F1,
+                    1.6em 1.85em 0 #FFBB00;
+    }
+
+    .microsoft:after, .microsoft::after {
+        z-index: 1;
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 2em; height: 2em;
+        background-image: linear-gradient(90deg, white 70%, rgba(255,255,255,0));
+    }
+</style>    
+    <title>Document</title>
+</head>
+<body>
+
+
+      
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+          <!-- Brand -->
+          <a class="navbar-brand" href="#">菜单目录</a>
+
+          <!-- Links -->
+          <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle active" href="#" id="navbardrop" data-toggle="dropdown">
+                      <i class="fa fa-user-circle" aria-hidden="true"></i>用户
+                  </a>
+                  <div class="dropdown-menu">
+                      <a class="dropdown-item" th:href="@{getuser}">用户信息</a>
+                      <a class="dropdown-item" th:href="@{show_member}">会员信息</a>
+                      <div class="dropdown-item" style="color: grey;" href="#">——————————</div>
+                      <a class="dropdown-item" th:href="@{show_card}">优惠券管理</a>
+                      <a class="dropdown-item active" th:href="@{show_mark}">会员积分商店</a>
+                      <div class="dropdown-item" style="color: grey;" href="#">——————————</div>
+                      <a class="dropdown-item " th:href="@{show_car}">绑定车辆管理</a>
+                  </div>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                      <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                      缴费 <b class="caret">
+                  </a>
+                  <div class="dropdown-menu">
+                      <a class="dropdown-item" th:href="@{pay_self}">自己缴费</a>
+                      <a class="dropdown-item" th:href="@{pay_forother}">代人缴费</a>
+                      <div class="dropdown-item" href="#">——————————</div>
+                      <a class="dropdown-item" th:href="@{pay_list}">缴费记录</a>
+                      <div class="dropdown-item" href="#">——————————</div>
+                      <a class="dropdown-item" th:href="@{pay_rule}">收费规则</a>
+                  </div>
+              </li>
+      
+          <!-- Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
+              服务
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">会员服务协议</a>
+              <a class="dropdown-item" href="#">用户隐私政策摘要</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <p class="microsoft marquee">小票抵停车券内容请移步微信小程序的小票抵券模块，电脑端暂不提供服务，希望广大用户谅解，谢谢配合  详情请查看<a href="http://windows.microsoft.com/en-US/windows-8/start-screen">官网</a></p>
+<div id="app">
+    <div  style="padding-top: 30px; padding-left: 30px;padding-right: 30px; background-color: #f4f5f9;">
+        <div style="width:100%;background-color:#f4f5f9; padding-left: 30px;padding-right: 30px;">
+            <!-- 主体部分 -->
+            <div>
+                <!-- 标题 -->
+                <div  style="margin-bottom: 0px; height:50px; background-color: #f4f5f9;color: #6d767e;font-size: 20px;">会员积分商店</div>
+                <!-- 真正主体 -->
+                <div class="box" style="height:800px;background-color: #ffffff">
+
+                    <div style="padding-top :100px;padding-left :150px;padding-right :150px;">
+                        <div class="alert alert-info" th:if="${user_type_name}eq'金卡会员'">
+                            <strong>成功!</strong> 你是金卡会员，可以兑换积分
+                        </div>
+                        <div class="alert alert-danger" th:if="${user_type_name}ne'金卡会员'">
+                            <strong>错误!</strong> 你不是金卡会员不能兑换积分,请返回其他页面
+                        </div>
+                        <hr>
+                        <div th:if="${user_type_name}eq'金卡会员'">
+                            <h4>您的积分:</h4><span>{{user_mark}}</span>
+                            <hr>
+                            <div style="margin-bottom:100px;">
+                                <div v-if="option==1" class="alert alert-success">
+                                    <strong>成功!</strong> 成功兑换。
+                                </div>
+                                <!-- 标题 -->
+                                <div  style="height:100px;padding-top: 30px; color: #333333;font-size: 24px;">会员兑换</div>
+                                <!-- 真正主体 -->
+                                <div style="background-color: white">
+                                    <div class="row" style="padding-left: 30px;padding-right: 30px;">
+                                        <div class="col-md-12"style="height:60px"></div>
+                                        <div class="col-md-1 box0" style="padding: 0;height:230px;margin: 2px;background-color:white"></div>
+                                        <div class="col-md-3 box"  style="padding: 0;height:230px; border: 1px solid black;margin: 3px; background-color: rgb(110, 34, 34)">
+                                            <div style="height:40px"></div>
+                                            <div style="text-align: center;color: white;"><span style="font-size: 40px;">1</span>&nbsp;&nbsp;小时</div>
+                                            <br>
+                                            <div style="text-align: center;color: white;">有效期：<span>{{nowdate}}</span></div>
+                                            <div style="height: 10px;"></div>
+                                            <button type="button" v-if="user_mark>=100" class="btn btn-light btn-sm"style="display:block;margin:0 auto" v-on:click="setHour1" data-toggle="modal" data-target="#myModal"><strong>100积分</strong> 兑换</button>
+                                            <button type="button" v-if="user_mark<100" style="display:block;margin:0 auto" class="btn btn-secondary">积分不足</button>
+                                        </div>
+                                        <div class="col-md-3 box2 " style="padding: 0;height:230px; border: 1px solid black;margin: 3px;background-color:rgb(110, 34, 34)">
+                                            <div style="height:40px"></div>
+                                            <div style="text-align: center;color: white;"><span style="font-size: 40px;">2</span>&nbsp;&nbsp;小时</div>
+                                            <br>
+                                            <div style="text-align: center;color: white;">有效期：<span>{{nowdate}}</span></div>
+                                            <div style="height: 10px;"></div>
+                                            <button type="button" v-if="user_mark>=200" class="btn btn-light btn-sm"style="display:block;margin:0 auto" v-on:click="setHour2" data-toggle="modal" data-target="#myModal"><strong>200积分</strong> 兑换</button>
+                                            <button type="button" v-if="user_mark<200" style="display:block;margin:0 auto" class="btn btn-secondary">积分不足</button>
+                                        </div>
+                                        <div class="col-md-3 box1 bg-secondary" style="padding: 0;height:230px; border: 1px solid black;margin: 3px;background-color:rgb(110, 34, 34)">
+                                            <div style="height:40px"></div>
+                                            <div style="text-align: center;color: white;"><span style="font-size: 40px;">3</span>&nbsp;&nbsp;小时</div>
+                                            <br>
+                                            <div style="text-align: center;color: white;">今日<span>已兑完</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br><br>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">会员兑换</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <form action="del_mark">
+                        <p>确定用<strong>{{mark}}</strong>积分兑换<strong>{{hour}}</strong>小时么？</p>
+                        <input hidden name="card_time" v-model="hour" />
+                        <input hidden name="card_endtime" v-model="nowdate" />
+                        <input hidden name="delMark" v-model="mark" />
+                        <button type="submit" class="btn btn-success">确定</button>
+                    </form>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../dayjs/dayjs.min.js"></script>
+
+<script th:inline="javascript">
+    var date = new Date();//获取当前时间
+    date.setDate(date.getDate() + 1);
+    const vm = new Vue({
+        el:'#app',
+        data:{
+            user_mark:[[${user_mark}]],
+            option:[[${option}]],
+            nowdate: dayjs(date).format('YYYY-MM-DD HH:mm:ss'),
+            hour:{},
+            mark:{}
+        },
+        methods:{
+            setHour1(){
+                this.hour = '1'
+                this.mark = '100'
+            },
+            setHour2(){
+                this.hour = '2'
+                this.mark = '200'
+            }
+        }
+    })
+</script>
+</body>
+</html>

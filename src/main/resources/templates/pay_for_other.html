@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="../js/vue-2.6.12.js"></script>
+  <style>
+    .marquee {
+        width: 1000px;
+        margin: 0 auto;
+        overflow: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+        animation: marquee 50s linear infinite;
+    }
+
+    .marquee:hover {
+        animation-play-state: paused
+    }
+
+    /* Make it move */
+    @keyframes marquee {
+        0%   { text-indent: 27.5em }
+        100% { text-indent: -105em }
+    }
+
+    /* Make it pretty */
+    .microsoft {
+        padding-left: 1.5em;
+        position: relative;
+        font: 16px 'Segoe UI', Tahoma, Helvetica, Sans-Serif;
+    }
+
+    /* ::before was :before before ::before was ::before - kthx */
+    .microsoft:before, .microsoft::before {
+        z-index: 2;
+        content: '';
+        position: absolute;
+        top: -1em; left: -1em;
+        width: .5em; height: .5em;
+        box-shadow: 1.0em 1.25em 0 #F65314,
+                    1.6em 1.25em 0 #7CBB00,
+                    1.0em 1.85em 0 #00A1F1,
+                    1.6em 1.85em 0 #FFBB00;
+    }
+
+    .microsoft:after, .microsoft::after {
+        z-index: 1;
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 2em; height: 2em;
+        background-image: linear-gradient(90deg, white 70%, rgba(255,255,255,0));
+    }
+</style>    
+    <title>Document</title>
+</head>
+<body>
+
+
+      
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+          <!-- Brand -->
+          <a class="navbar-brand" href="#">菜单目录</a>
+
+          <!-- Links -->
+          <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                      <i class="fa fa-user-circle" aria-hidden="true"></i>用户
+                  </a>
+                  <div class="dropdown-menu">
+                      <a class="dropdown-item" th:href="@{getuser}">用户信息</a>
+                      <a class="dropdown-item" th:href="@{show_member}">会员信息</a>
+                      <div class="dropdown-item" style="color: grey;" href="#">——————————</div>
+                      <a class="dropdown-item" th:href="@{show_card}">优惠券管理</a>
+                      <a class="dropdown-item" th:href="@{show_mark}">会员积分商店</a>
+                      <div class="dropdown-item" style="color: grey;" href="#">——————————</div>
+                      <a class="dropdown-item " th:href="@{show_car}">绑定车辆管理</a>
+                  </div>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle active" href="#" id="navbardrop" data-toggle="dropdown">
+                      <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                      缴费 <b class="caret">
+                  </a>
+                  <div class="dropdown-menu">
+                      <a class="dropdown-item" th:href="@{pay_self}">自己缴费</a>
+                      <a class="dropdown-item active" th:href="@{pay_forother}">代人缴费</a>
+                      <div class="dropdown-item" href="#">——————————</div>
+                      <a class="dropdown-item" th:href="@{pay_list}">缴费记录</a>
+                      <div class="dropdown-item" href="#">——————————</div>
+                      <a class="dropdown-item" th:href="@{pay_rule}">收费规则</a>
+                  </div>
+              </li>
+      
+          <!-- Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
+              服务
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">会员服务协议</a>
+              <a class="dropdown-item" href="#">用户隐私政策摘要</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <p class="microsoft marquee">小票抵停车券内容请移步微信小程序的小票抵券模块，电脑端暂不提供服务，希望广大用户谅解，谢谢配合  详情请查看<a href="http://windows.microsoft.com/en-US/windows-8/start-screen">官网</a></p>
+
+    <div id="app" style="padding-top: 30px; padding-left: 30px;padding-right: 30px; background-color: #f4f5f9;">
+        <div style="height:1000px;width:100%;background-color:#f4f5f9; padding-left: 30px;padding-right: 30px;">
+            <!-- 主体部分 -->
+            <div>
+              <!-- 标题 -->
+              <div  style="margin-bottom: 0px; height:50px; background-color: #f4f5f9;color: #6d767e;font-size: 20px;">代人缴费</div>
+              <!-- 真正主体 -->
+              <div class="box" style="height:800px;background-color: #ffffff">
+                <div style="padding-top :100px;padding-left :250px;padding-right :250px;">
+                  <!-- 搜索框部分 -->
+                  <form action="show_payOther">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-10">
+                          <input type="text" class="form-control" name="car_card"  placeholder="请输入车牌号">
+                        </div>
+                        <div class="col-md-2">
+                          <button type="submit" style="width: 100px;" class="btn btn-primary ">搜索</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <div style="height:15px"></div>
+                  <hr><br>
+                  <table class="table table-dark table-hover">
+                    <thead>
+                      <tr>
+                        <th>用户名</th>
+                        <th>车牌号</th>
+                        <th>手机号</th>
+                        <th>进场时间</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody th:if="${option}ne'0'">
+                      <tr>
+                        <td>{{otherCar.username}}</td>
+                        <td>{{otherCar.car_card}}</td>
+                        <td>{{otherCar.phone}}</td>
+                        <td>{{otherCar.car_intime}}</td>
+                        <td>
+                            <form action="pay_ready">
+                                <input hidden name="car_card" v-bind:value="otherCar.car_card"/>
+                                <input hidden name="left_time" v-bind:value="otherCar.car_intime | dateleft"  >
+                                <input hidden name="car_intime" v-bind:value="otherCar.car_intime | dateFormat">
+                                <input hidden name="nowdate" v-bind:value="nowdate">
+                                <button type="submit" class="btn btn-secondary">代支付</button>
+                            </form>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+      <script src="../dayjs/dayjs.min.js"></script>
+      <script  th:inline="javascript">
+          Vue.filter('dateFormat', function (time) {
+              const dtStr = dayjs(time).format('YYYY-MM-DD HH:mm:ss')
+              return dtStr
+          })
+
+          Vue.filter('dateleft',function (time) {
+              const dtStr = dayjs(time).format('YYYY-MM-DD HH:mm:ss')
+              const d1 = new Date(dtStr)
+              const d2 = new Date()
+
+              const leftD = parseInt(d2 - d1) / 1000 / 60/60
+              return leftD
+          })
+          const vm = new Vue({
+              el:"#app",
+              data:{
+                  otherCar:[[${otherCar}]],
+                  nowdate: dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')
+              }
+
+          })
+
+      </script>
+</body>
+</html>
