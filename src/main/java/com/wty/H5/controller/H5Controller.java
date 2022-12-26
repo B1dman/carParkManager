@@ -26,6 +26,7 @@ public class H5Controller {
         if(money==null){
             return Max;
         }
+        System.out.println("测试hot-fix");
         System.out.println("测试2");
         //判断money最多能抵多少
         Max = h5Service.getRule(money);
